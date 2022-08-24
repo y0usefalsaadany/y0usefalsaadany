@@ -105,7 +105,9 @@ I worked on a banking system and web app system for managing pilgrims using lara
 - Design Patterns
 
 - MVC
-  
+    
+- Packages Development
+    
 - Web Security
 
 - Web Scrapping
