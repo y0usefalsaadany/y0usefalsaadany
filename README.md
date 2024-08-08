@@ -12,19 +12,39 @@
 <p><img align="right" src="https://github.com/Adam-pw/Adam-pw/blob/main/animation_500_kxa883sd.gif" alt="adam-pw" /></p>
 
 <p> 
-I started my journey since late 2019, I have a passion for most aspects of computer related departments as I learned many languages like
-- html, JavaScript, php, python
-And deal with oop , software design patterns and solid principles using php
-- Building a database using SQL
-- Networking fundamentals
-- The basics of building operating systems
-- Dealing with the operating system by command line using bash and batsh script
+Seasoned Backend PHP Developer with a Passion for Innovation and Education
 
-I am interested in the field of penetration testing, I am currently working as a backend developer using php
-And protect the site from the most famous vulnerabilities such as
-- xss, csrf, sql injection and file upload etc .
+Driven by a deep-seated passion for software development, I bring a wealth of experience as a seasoned Backend PHP Developer, adept at handling diverse projects with proven success. My expertise encompasses a wide range of applications, including:
 
-I worked on a banking system and web app system for managing pilgrims using laravel while working In the company and i made a package using laravel to deal with site views
+    - ERP systems
+    - E-commerce platforms
+    - Company Management Systems
+    - Study Management Systems
+    - Fire Maintenance Systems
+    - E-Courses platforms
+
+Furthermore, I contributed to developing a website for managing pilgrims and various mobile applications as a backend developer.
+
+One of my proudest achievements is the creation of a platform aimed at assisting students and graduates in navigating the labor market. This platform offers educational courses, company trainings, and workshops, reflecting my dedication to creating and fostering valuable educational opportunities.
+
+My software development skillset is comprehensive, encompassing:
+
+    - Operating system functionality
+    - Internet protocols
+    - Software principles and design patterns
+    - Object-oriented programming
+    - MVC and HMVC architecture
+    - REST API development and integration
+    - Secure coding practices
+    - Unit testing
+    - Database design and optimization
+    - Web hosting and deployment
+    - Web scraping techniques
+    - Multi-tenancy architecture implementation
+
+Beyond my technical expertise, I actively engage in content creation on YouTube, sharing valuable insights into software development. Having collaborated with four programming companies, I've refined my backend development skills in diverse web and mobile applications, particularly those focusing on E-commerce, ERP, and study management systems. My unwavering commitment to delivering high-quality results is evident from my contributions to projects like the course platform and the Hajj pilgrim management system.
+
+I'm excited and eager to leverage my skills and extensive experience to contribute to groundbreaking projects and collaborate with dynamic teams, fostering innovation and driving success.
 </p>
 
 <br>
