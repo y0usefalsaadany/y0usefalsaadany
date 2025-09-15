@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yousef Alsaadany - PHP Backend Developer</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'custom-blue': '#2563EB',
+            'custom-gray': '#6B7280',
+            'custom-white': '#F9FAFB',
+            'custom-accent': '#3B82F6',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'custom': '0 4px 12px rgba(0, 0, 0, 0.1)',
+            'custom-hover': '0 8px 24px rgba(0, 0, 0, 0.15)',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .timeline-item { @apply relative pb-12; }
+    .timeline-item::before { content: ''; @apply absolute top-6 left-4 w-1 h-full bg-custom-gray/30 dark:bg-custom-gray/60; }
+    .timeline-item:last-child::before { @apply h-0; }
+    .timeline-dot { @apply absolute w-4 h-4 bg-custom-blue rounded-full left-2.5 top-6 transform -translate-y-1/2 transition-transform duration-300; }
+    .timeline-content { @apply ml-12 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-custom border border-custom-gray/20 dark:border-custom-gray/40 transition-all duration-300 hover:shadow-custom-hover; }
+    .card-hover { @apply transition-transform duration-300 hover:scale-105; }
+    .nav-sticky { @apply sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-custom-gray/10 dark:border-custom-gray/30; }
+    .diamond { @apply w-5 h-5 transform rotate-45 bg-custom-accent/30 dark:bg-custom-accent/60 absolute left-1.5 top-1/2 -translate-y-1/2; }
+    .dark .text-custom-gray { @apply text-custom-white; }
+    .section-title { @apply text-4xl font-bold text-custom-blue mb-8 tracking-tight; }
+    .btn-primary { @apply bg-custom-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-custom-blue/90 transition-all duration-300; }
+    .btn-secondary { @apply border-2 border-custom-blue text-custom-blue px-6 py-3 rounded-lg font-semibold hover:bg-custom-blue hover:text-white transition-all duration-300; }
+    .mobile-nav { @apply hidden; }
+    @media (max-width: 768px) {
+      .mobile-nav { @apply block; }
+      .desktop-nav { @apply hidden; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased">
+  <div id="app" role="application">
+    <!-- Header -->
+    <header class="nav-sticky" role="banner">
+      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#home" class="text-3xl font-bold text-custom-blue hover:text-custom-accent transition-colors" aria-label="Yousef Alsaadany Home">Yousef Alsaadany</a>
+        <ul class="desktop-nav flex space-x-6" role="navigation">
+          <li><a href="#home" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('home')" aria-label="Navigate to Home">Home</a></li>
+          <li><a href="#about" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('about')" aria-label="Navigate to About">About</a></li>
+          <li><a href="#skills" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('skills')" aria-label="Navigate to Skills">Skills</a></li>
+          <li><a href="#experience" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('experience')" aria-label="Navigate to Experience">Experience</a></li>
+          <li><a href="#projects" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('projects')" aria-label="Navigate to Projects">Projects</a></li>
+          <li><a href="#contact" class="text-lg hover:text-custom-accent transition-colors" @click="scrollToSection('contact')" aria-label="Navigate to Contact">Contact</a></li>
+        </ul>
+        <button @click="toggleDarkMode" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" aria-label="Toggle Dark Mode">
+          <svg v-if="isDarkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          <svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12" role="main">
+      <!-- Home Section -->
+      <section id="home" class="mb-20 text-center" aria-labelledby="home-title">
+        <h1 id="home-title" class="text-5xl md:text-6xl font-bold text-custom-blue mb-4 tracking-tight">Yousef Alsaadany</h1>
+        <h2 class="text-2xl md:text-3xl text-custom-gray/80 dark:text-custom-white mb-6 font-medium">PHP Backend Developer</h2>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed text-custom-gray/80 dark:text-custom-white mb-8">
+          I am an experienced backend developer specializing in PHP and the Laravel framework. My expertise lies in developing APIs, multi-tenancy systems, and deploying websites on shared servers and VPS. I have a strong track record of integrating backend systems with payment gateways and external platforms, with a focus on clean code and design patterns.
+        </p>
+        <div class="space-x-4">
+          <a href="#projects" class="bg-custom-blue text-white px-6 py-3 rounded-md hover:bg-custom-blue/80 transition-colors" @click="scrollToSection('projects')" aria-label="View Projects">View Projects</a>
+          <a href="#contact" class="border-2 border-custom-blue text-custom-blue px-6 py-3 rounded-md hover:bg-custom-blue hover:text-white transition-colors" @click="scrollToSection('contact')" aria-label="Get In Touch">Get In Touch</a>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="mb-20" aria-labelledby="about-title">
+        <h1 id="about-title" class="text-3xl font-bold text-custom-blue mb-6">About Me</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <img src="me.jpg" alt="Yousef Alsaadany Profile Photo" class="w-full h-72 object-cover rounded-xl shadow-custom">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+                <h4 class="font-semibold text-custom-gray/80 dark:text-custom-white">Phone</h4>
+                <p class="text-custom-gray/70 dark:text-custom-white">+201148286749</p>
+              </div>
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+                <h4 class="font-semibold text-custom-gray/80 dark:text-custom-white">Email</h4>
+                <a href="mailto:yousefalsaadany5@gmail.com" class="text-custom-blue hover:underline">yousefalsaadany5@gmail.com</a>
+              </div>
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+                <h4 class="font-semibold text-custom-gray/80 dark:text-custom-white">Location</h4>
+                <p class="text-custom-gray/70 dark:text-custom-white">Cairo, Egypt</p>
+              </div>
+              <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+                <h4 class="font-semibold text-custom-gray/80 dark:text-custom-white">Education</h4>
+                <p class="text-custom-gray/70 dark:text-custom-white">Management Information System, Delta Academy</p>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-6">
+            <p class="text-lg text-custom-gray/80 dark:text-custom-white leading-relaxed">
+              Based in Cairo, Egypt, I specialize in building robust backend solutions for e-commerce, ERP, LMS, and more. My passion for clean code and scalable architectures allows me to transform complex requirements into efficient, maintainable systems.
+            </p>
+            <div>
+              <h3 class="text-2xl font-bold text-custom-blue mb-4">Courses & Certifications</h3>
+              <ul class="space-y-2 text-custom-gray/80 dark:text-custom-white">
+                <li v-for="course in courses" :key="course" class="flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-custom-blue" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L9 11.586 6.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l7-7a1 1 0 000-1.414z" clip-rule="evenodd"></path>
+                  </svg>
+                  {{ course }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="mb-20" aria-labelledby="skills-title">
+        <h1 id="skills-title" class="text-3xl font-bold text-custom-blue mb-6">Skills</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="skill in skills" :key="skill.title" class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-custom border border-custom-gray/10 dark:border-custom-gray/30 card-hover">
+            <h2 class="text-xl font-bold text-custom-blue mb-4">{{ skill.title }}</h2>
+            <ul class="space-y-2 text-custom-gray/80 dark:text-custom-white">
+              <li v-for="item in skill.items" :key="item" class="flex items-center">
+                <svg class="w-4 h-4 mr-2 text-custom-blue" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience" class="mb-20" aria-labelledby="experience-title">
+        <h1 id="experience-title" class="text-3xl font-bold text-custom-blue mb-6">Work History</h1>
+        <div class="relative space-y-12">
+          <div v-for="(exp, index) in experiences" :key="exp.title" class="timeline-item">
+            <div class="diamond"></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="text-xl font-semibold text-custom-blue">{{ exp.title }}</h3>
+              <p class="text-sm text-custom-gray/70 dark:text-custom-white">{{ exp.period }}</p>
+              <p class="text-custom-gray/80 dark:text-custom-white">{{ exp.description }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Projects Warning -->
+      <div class="mb-8 p-6 bg-yellow-50 dark:bg-yellow-900/30 rounded-xl shadow-custom border border-yellow-200 dark:border-yellow-700 text-center">
+        <p class="text-lg text-yellow-800 dark:text-yellow-200">
+          Note: Most project links are not provided due to the confidential nature of the projects.
+        </p>
+      </div>
+      <!-- Projects Section -->
+      <section id="projects" class="mb-16" aria-labelledby="projects-title">
+        <h1 class="text-3xl font-bold text-custom-blue mb-6">Projects</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="project in projects" :key="project.title" class="card-hover p-6 bg-white dark:bg-gray-800 rounded-xl shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+            <h3 class="text-xl font-semibold text-custom-blue mb-2">{{ project.title }}</h3>
+            <p class="text-custom-gray/80 dark:text-custom-white mb-4">{{ project.description }}</p>
+            <h4 class="text-sm font-semibold text-custom-gray/80 dark:text-custom-white mb-2">Technologies Used:</h4>
+            <ul class="space-y-1 text-custom-gray/80 dark:text-custom-white mb-4">
+              <li v-for="tech in project.technologies" :key="tech" class="flex items-center">
+                <svg class="w-4 h-4 mr-2 text-custom-blue" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                {{ tech }}
+              </li>
+            </ul>
+            <a :href="project.link" class="text-custom-blue hover:underline font-semibold" aria-label="View project {{ project.title }}">{{ project.linkText }}</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" aria-labelledby="contact-title">
+        <h1 id="contact-title" class="text-3xl font-bold text-custom-blue mb-6">Contact Me</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <p class="text-lg text-custom-gray/80 dark:text-custom-white leading-relaxed mb-6">
+              I'm always open to new opportunities and collaborations. Feel free to reach out via the contact details below.
+            </p>
+            <a href="#contact" class="border-2 border-custom-blue text-custom-blue px-6 py-3 rounded-md hover:bg-custom-blue hover:text-white transition-colors" @click="scrollToSection('contact')" aria-label="Get In Touch">Send a Message</a>
+          </div>
+          <div class="space-y-4">
+            <div v-for="contact in contacts" :key="contact.title" class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-custom border border-custom-gray/10 dark:border-custom-gray/30">
+              <h4 class="font-semibold text-custom-gray/80 dark:text-custom-white">{{ contact.title }}</h4>
+              <p v-if="!contact.link" class="text-custom-gray/80 dark:text-custom-white">{{ contact.value }}</p>
+              <a v-else :href="contact.link" class="text-custom-blue hover:underline" :aria-label="contact.title">{{ contact.value }}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 text-center" role="contentinfo">
+      <p>&copy; 2025 Yousef Alsaadany. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const isDarkMode = ref(localStorage.getItem('darkMode') === 'true');
+        const isMobileMenuOpen = ref(false);
+
+        if (isDarkMode.value) {
+          document.documentElement.classList.add('dark');
+        }
+
+        const toggleDarkMode = () => {
+          isDarkMode.value = !isDarkMode.value;
+          document.documentElement.classList.toggle('dark');
+          localStorage.setItem('darkMode', isDarkMode.value);
+        };
+
+        const toggleMobileMenu = () => {
+          isMobileMenuOpen.value = !isMobileMenuOpen.value;
+        };
+
+        const scrollToSection = (sectionId) => {
+          document.querySelector(`#${sectionId}`).scrollIntoView({ behavior: 'smooth' });
+          isMobileMenuOpen.value = false;
+        };
+
+        const courses = ref([
+          'Front-end Development',
+          'CS50X, CS50T',
+          'CompTIA A+',
+          'OS Architecture',
+          'Network Fundamentals',
+          'Databases Design',
+          'Back-end Development',
+          'System Analysis'
+        ]);
+
+        const skills = ref([
+          { title: 'Fundamentals', items: ['How OS Works', 'How Internet Works', 'Web Protocols'] },
+          { title: 'Simple Knowledge', items: ['HTML - CSS - JavaScript - Bootstrap - Vue js - Nuxt Js'] },
+          { title: 'Back-end', items: ['PHP - OOP - MySQL - Laravel - Rest APIs'] },
+          { title: 'Advanced Skills', items: ['RabbitMQ - Redis - Multi Tenancy', 'DRY, KISS, YAGNI & SOLID Principles', 'Design Patterns - Clean Code - MVC - HMVC', 'Web Security - Packages Development - Payment Gateways'] },
+          { title: 'Database Design', items: ['ERD - ACID - N+1 Problem'] },
+          { title: 'Web Servers & Hosting', items: ['Nginx - Apache', 'Web Hosting: Shared - VPS'] }
+        ]);
+
+        const experiences = ref([
+          { title: 'Backend Developer - Know How Solutions', period: 'Sep 2025 - Present', description: 'Support LMS projects with Laravel and Nuxt js.' },
+          { title: 'Backend Team Leader - Azzrk', period: 'Sep 2024 - Sep 2025', description: 'Made e-commerce projects with RabbitMQ, WhatsApp services, Redis, and Contabo storage.' },
+          { title: 'Laravel Backend Developer - Technoraft Company', period: 'May 2024 - Aug 2024', description: 'Code maintenance for e-commerce projects. Integration with payment gateways such as Paymob and Tap.' },
+          { title: 'Laravel Backend Developer - Code Time Company', period: 'Mar 2024 - May 2024', description: 'Developed APIs for a mobile application for clinics. Maintenance of old projects. Supervising training of fresh backend developers.' },
+          { title: 'Instructor Backend At Faculty of Engineering, Mansoura University', period: 'Jul 2024 - Sep 2024', description: 'Provided backend instruction and guidance.' },
+          { title: 'Instructor Backend At Microsoft Student Club', period: 'Oct 2023 - Apr 2024', description: 'Provided backend instruction and guidance.' },
+          { title: 'Laravel Backend Developer - Kormava Company', period: 'Sep 2023 - Present', description: 'Worked on Student Management System, Construction Company Portfolio, and e-commerce backend.' },
+          { title: 'Laravel Backend Developer - IGS Company', period: 'May 2023 - Nov 2023', description: 'Multi-Tenancy Company Management and Fire Extinguisher Management projects.' },
+          { title: 'Laravel Backend Developer - Code Icons Company', period: 'Mar 2022 - Mar 2023', description: 'ERP Project, E-commerce Web & Mobile Backend, Pilgrimage Management System.' },
+          { title: 'Laravel Backend Developer - Freelance', period: 'Feb 2022 - Present', description: 'Online courses platform and online auction platform for homes.' },
+          { title: 'Laravel Backend Developer - DYS Platform', period: 'Oct 2022 - Present', description: 'Educational platform for training courses and workshops.' }
+        ]);
+
+        const projects = ref([
+          { title: 'Salla App For Whatsapp Campaigns', description: 'A platform dedicated to Salla applications, designed to manage customers effortlessly through WhatsApp promotional campaigns, easily integrated into all Salla stores to boost sales.', technologies: ['Laravel', 'REST API', 'RabbitMQ', 'Redis', 'Socket io'], link: 'https://drive.google.com/drive/folders/1QD2jzBmCNT8HHg8eJDZGB8iZ2y3u9BQ_?usp=sharing', linkText: 'View →' },
+          { title: 'Amiaal ERP & E Commerce', description: 'The Amiaal platform is an e-commerce store for selling glasses, featuring an ERP system component that includes sales representatives, delivery agents, and management of returns and commissions. I performed a complete code refactor, improving its quality, fixing errors, and working on product returns, commission management, and integrating the TAP payment gateway.', technologies: ['Laravel', 'HMVC', 'jquery' , 'REST API' , 'TAP Payment'], link: 'https://amiaalstore.com/', linkText: 'View →' },
+          { title: 'Amiaal ERP & E Commerce Dashboard', description: 'The Amiaal Dashboard.', technologies: ['Laravel', 'HMVC', 'jquery' , 'REST API' , 'TAP Payment'], link: 'https://drive.google.com/file/d/1qW1quj2-fLDlvQATu01QmRYxROwWMLlC/view?usp=sharing', linkText: 'View →' },
+          { title: 'Remal Sinai E Commerce', description: 'The Remal Sinai platform is designed for managing and booking tourist trips in Sinai, including destinations like Hurghada, Sharm El-Sheikh, and more, as well as safari trips. It also sells tourism-related products.', technologies: ['Laravel', 'jquery'], link: 'https://remal-sinai-test.vercel.app/', linkText: 'View →' },
+          { title: 'Construction Company Portfolio', description: 'Created a portfolio website for a construction company.', technologies: ['Laravel', 'REST API'], link: 'https://alrehabdevelopments.com/', linkText: 'View →' },
+          { title: 'Multi Tenancy Cars E Commerce', description: 'A platform for managing and selling cars, enabling each merchant to sell their products. I worked on developing the subscription packages system and the affiliate system, allowing each merchant to earn a commission from every merchant referred through their unique affiliate code.', technologies: ['Laravel', 'REST API'], link: 'https://drive.google.com/drive/folders/1MkB2sQEPsxouxHbQT8YBjo8PVPnqsNOs?usp=sharing', linkText: 'View →' },
+          { title: 'Multi-Tenancy ERP System', description: 'Backend development for an Multi Tenancy ERP system.', technologies: ['Laravel', 'Multi Tenancy', 'REST API', 'HMVC'], link: 'https://drive.google.com/drive/folders/1ZWkL-e0o7Y1iNIhHUEson0DCZg8VZsGM?usp=sharing', linkText: 'View →' },
+          { title: 'Multi-Tenancy Fire Extinguisher Management', description: 'Backend for fire safety equipment management.', technologies: ['Laravel', 'REST API', 'Multi-Tenancy', 'HMVC'], link: '#', linkText: 'View →' },
+          { title: 'Pilgrimage Management System', description: 'Developed a pilgrimage management system in collaboration with a full team of developers, focusing on backend development for both web and mobile applications', technologies: ['Laravel', 'REST API',], link: 'https://forms.innovativeideasbox.com', linkText: 'View →' },
+        ]);
+
+        const contacts = ref([
+          { title: 'Phone', value: '+201148286749' },
+          { title: 'Email', value: 'yousefalsaadany5@gmail.com', link: 'mailto:yousefalsaadany5@gmail.com' },
+          { title: 'LinkedIn', value: 'linkedin.com/in/yousef-alsaadany', link: 'https://www.linkedin.com/in/yousef-elsaadany-0b0364206/' },
+          { title: 'GitHub', value: 'github.com/y0usefalsaadany', link: 'https://github.com/y0usefalsaadany' },
+          { title: 'YouTube', value: 'youtube.com/@softwarej0e', link: 'https://youtube.com/@softwarej0e' },
+          { title: 'Address', value: 'Cairo, Egypt' }
+        ]);
+
+        return { isDarkMode, isMobileMenuOpen, toggleDarkMode, toggleMobileMenu, scrollToSection, courses, skills, experiences, projects, contacts };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
